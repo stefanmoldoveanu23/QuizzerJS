@@ -1,0 +1,11 @@
+{
+  "name": "quizzerjs",
+  "version": "1.0.0",
+  "description": "A web app where a user can create a quizz for others to play.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
