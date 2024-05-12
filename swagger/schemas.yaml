@@ -1,0 +1,26 @@
+components:
+  schemas:
+    createUserDTO:
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    loginUserDTO:
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    user:
+      properties:
+        id:
+          type: number
+        email:
+          type: string
+        username:
+          type: string
+        validated:
+          type: boolean
