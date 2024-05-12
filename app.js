@@ -4,6 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import routes from "./src/routes/index.js";
 import errorHandler from "./src/middlewares/error-handler.js";
+import nodemailer from "nodemailer"
 
 dotenv.config();
 

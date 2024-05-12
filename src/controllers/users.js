@@ -11,6 +11,16 @@ const createUser = async (req, res, next) => {
   }
 };
 
+const verifyEmail = async (req, res, next) => {
+  try {
+    const result = await usersService.verifyEmail(req.body);
+
+    res.status(201).send(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
 const getUser = async (req, res, next) => {
   try {
     const result = await usersService.getUser(+req.params.id);
@@ -19,7 +29,7 @@ const getUser = async (req, res, next) => {
       return next(new httpError(400, "No user with id."));
     }
 
-    res.status(200).send(result);
+    res.status(201).send(result);
   } catch (err) {
     next(err);
   }
@@ -33,7 +43,7 @@ const loginUser = async (req, res, next) => {
       return next(new httpError(400, "No user with credentials."));
     }
 
-    res.status(200).send(result);
+    res.status(201).send(result);
   } catch (err) {
     next(err);
   }
@@ -41,6 +51,7 @@ const loginUser = async (req, res, next) => {
 
 export default {
   createUser,
+  verifyEmail,
   getUser,
   loginUser,
 };

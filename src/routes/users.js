@@ -64,6 +64,34 @@ router
 
 /**
  * @swagger
+ * /users/verify:
+ *   post:
+ *     description: Verify an email address
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/email_verification'
+ *     responses:
+ *       201:
+ *         description: Successfully verified email address
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/user'
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: General error
+ */
+router
+  .route("/verify")
+  .post(usersController.verifyEmail);
+
+/**
+ * @swagger
  * /users/{id}:
  *   get:
  *     description: Get users by id

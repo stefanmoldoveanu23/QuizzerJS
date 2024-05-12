@@ -24,3 +24,7 @@ components:
           type: string
         validated:
           type: boolean
+    email_verification:
+      properties:
+        code:
+          type: string
