@@ -4,6 +4,9 @@ import bcrypt from "bcrypt";
 import mailer from "../utils/mailer.js";
 import { randomUUID } from "crypto";
 
+import jwt from "jsonwebtoken";
+const { sign } = jwt;
+
 const createUser = async (userInfo) => {
   const { email, password, ...user } = userInfo;
 
@@ -127,7 +130,15 @@ const loginUser = async (userInfo) => {
     throw new httpError(400, "Incorrect credentials.");
   }
 
-  return result;
+  return sign(
+    {
+      user_id: result.id
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1h"
+    }
+  );
 }
 
 export default {

@@ -50,9 +50,10 @@ router
  *       201:
  *         description: Logged user in
  *         content:
- *           application/json:
+ *           text/plain:
  *             schema:
- *               $ref: '#/components/schemas/user'
+ *               type: string
+ *               example: cool_token
  *       400:
  *         description: Bad request
  *       500:

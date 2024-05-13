@@ -1,4 +1,9 @@
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     createUserDTO:
       properties:
@@ -28,3 +33,19 @@ components:
       properties:
         code:
           type: string
+    createQuizDTO:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    quiz:
+      properties:
+        id:
+          type: number
+        user_id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string          

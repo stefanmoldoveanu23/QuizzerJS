@@ -38,11 +38,6 @@ const getUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   try {
     const result = await usersService.loginUser(req.body);
-
-    if (!result) {
-      return next(new httpError(400, "No user with credentials."));
-    }
-
     res.status(201).send(result);
   } catch (err) {
     next(err);
