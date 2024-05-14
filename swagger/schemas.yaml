@@ -43,9 +43,49 @@ components:
       properties:
         id:
           type: number
-        user_id:
+        userId:
           type: number
         name:
           type: string
         description:
-          type: string          
+          type: string     
+    createQuestionDTO:
+      properties:
+        quizId:
+          type: number
+        type:
+          type: string
+          enum: [singleChoice, multipleChoice, association, itemSort]
+        position:
+          type: integer
+        statement:
+          type: string
+        choices:
+          type: array
+          items:
+            type: string
+        answer:
+          type: array
+          items:
+            type: integer
+    question:
+      properties:
+        id:
+          type: integer
+        quizId:
+          type: integer
+        type:
+          type: string
+          enum: [singleChoice, multipleChoice, association, itemSort]
+        position:
+          type: integer
+        statement:
+          type: string
+        choices:
+          type: array
+          items:
+            type: string
+        answer:
+          type: array
+          items:
+            type: integer

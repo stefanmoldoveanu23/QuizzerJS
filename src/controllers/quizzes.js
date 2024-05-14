@@ -10,6 +10,17 @@ const createQuiz = async (req, res, next) => {
     }
 }
 
+const getQuiz = async (req, res, next) => {
+    try {
+        const result = await quizzesServices.getQuiz(+req.params.id);
+
+        res.status(201).send(result);
+    } catch (err) {
+        next(err);
+    }
+}
+
 export default {
-    createQuiz
+    createQuiz,
+    getQuiz
 };

@@ -1,61 +1,56 @@
 import express from 'express';
-import quizzesController from '../controllers/quizzes.js'
-import jwtDecoder from '../middlewares/jwt-decoder.js';
+import questionsController from '../controllers/questions.js';
 
 const router = express.Router();
 
 /**
  * @swagger
- * /quizzes:
+ * /questions:
  *   post:
- *     description: Create a new quiz
- *     security:
- *       - bearerAuth: []
- *     tags: [Quiz]
+ *     description: Create a question
+ *     tags: [Question]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/createQuizDTO'
+ *             $ref: '#/components/schemas/createQuestionDTO'
  *     responses:
  *       201:
- *         description: Created quiz
+ *         description: Created a new question
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/quiz'
+ *               $ref: '#/components/schemas/question'
  *       400:
  *         description: Bad request
- *       401:
- *         description: Access denied
  *       500:
  *         description: General error
  */
 router
     .route("/")
-    .post(jwtDecoder, quizzesController.createQuiz);
+    .post(questionsController.createQuestion);
 
 /**
  * @swagger
- * /quizzes/{id}:
+ * /questions/{id}:
  *   get:
- *     description: Get quiz from id
- *     tags: [Quiz]
+ *     description: Get a question from its id
+ *     tags: [Question]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
+ *         description: Numeric ID of the question
  *         required: true
- *         description: Numeric ID of the quiz to get
  *     responses:
  *       201:
- *         description: quiz
+ *         description: Received the question
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/quiz'
+ *               $ref: '#/components/schemas/question'
  *       400:
  *         description: Bad request
  *       500:
@@ -63,6 +58,6 @@ router
  */
 router
     .route("/:id")
-    .get(quizzesController.getQuiz);
+    .get(questionsController.getQuestion);
 
 export default router;

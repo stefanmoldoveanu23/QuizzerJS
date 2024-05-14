@@ -44,7 +44,7 @@ model Question {
   position  Int
   statement String
   choices   String[]
-  Answer    Int[]
+  answer    Int[]
 
   @@map("questions")
 }
