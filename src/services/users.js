@@ -141,9 +141,22 @@ const loginUser = async (userInfo) => {
   );
 }
 
+const deleteUser = async (userId) => {
+  const result = await prisma.user.delete({
+    where: {
+      id: userId
+    }
+  });
+
+  if (!result) {
+    throw new httpError(400, "No user with id " + userId + ".");
+  }
+}
+
 export default {
   createUser,
   verifyEmail,
   getUser,
-  loginUser
+  loginUser,
+  deleteUser
 };

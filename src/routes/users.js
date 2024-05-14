@@ -34,7 +34,6 @@ router
   .post(validate(usersValidations.createUsers), usersController.createUser);
 
 /**
- * 
  * @swagger
  * /users/login:
  *   post:
@@ -47,7 +46,7 @@ router
  *           schema:
  *             $ref: '#/components/schemas/loginUserDTO'
  *     responses:
- *       201:
+ *       200:
  *         description: Logged user in
  *         content:
  *           text/plain:
@@ -66,7 +65,7 @@ router
 /**
  * @swagger
  * /users/verify:
- *   post:
+ *   patch:
  *     description: Verify an email address
  *     tags: [User]
  *     requestBody:
@@ -76,7 +75,7 @@ router
  *           schema:
  *             $ref: '#/components/schemas/email_verification'
  *     responses:
- *       201:
+ *       200:
  *         description: Successfully verified email address
  *         content:
  *           application/json:
@@ -89,7 +88,7 @@ router
  */
 router
   .route("/verify")
-  .post(usersController.verifyEmail);
+  .patch(usersController.verifyEmail);
 
 /**
  * @swagger
@@ -117,5 +116,30 @@ router
  *         description: General error
  */
 router.route("/:id").get(usersController.getUser);
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     description: Delete a user
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of user to be deleted
+ *         requested: true
+ *     responses:
+ *       204:
+ *         description: User deleted successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: General error
+ */
+router
+  .route("/:id")
+  .delete(usersController.deleteUser);
 
 export default router;

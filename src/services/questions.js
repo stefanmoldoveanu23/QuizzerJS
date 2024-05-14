@@ -30,7 +30,20 @@ const getQuestion = async (questionId) => {
     }
 }
 
+const deleteQuestion = async (questionId) => {
+    const result = await prisma.question.delete({
+        where: {
+            id: questionId
+        }
+    });
+
+    if (!result) {
+        throw new httpError(400, "No question with id " + questionId + ".");
+    }
+}
+
 export default {
     createQuestion,
-    getQuestion
+    getQuestion,
+    deleteQuestion
 }

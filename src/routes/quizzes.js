@@ -50,7 +50,7 @@ router
  *         required: true
  *         description: Numeric ID of the quiz to get
  *     responses:
- *       201:
+ *       200:
  *         description: quiz
  *         content:
  *           application/json:
@@ -64,5 +64,30 @@ router
 router
     .route("/:id")
     .get(quizzesController.getQuiz);
+
+/**
+ * @swagger
+ * /quizzes/{id}:
+ *   delete:
+ *     description: Delete a quiz
+ *     tags: [Quiz]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of quiz to be deleted
+ *         required: true
+ *     responses:
+ *       204:
+ *         description: Quiz deleted successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: General error
+ */
+router
+    .route("/:id")
+    .delete(quizzesController.deleteQuiz);
 
 export default router;

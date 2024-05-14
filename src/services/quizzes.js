@@ -32,7 +32,20 @@ const getQuiz = async (quizId) => {
     }
 }
 
+const deleteQuiz = async (quizId) => {
+    const result = await prisma.quiz.delete({
+        where: {
+            id: quizId
+        }
+    });
+
+    if (!result) {
+        throw new httpError(400, "No quiz with id " + quizId + ".");
+    }
+}
+
 export default {
     createQuiz,
-    getQuiz
+    getQuiz,
+    deleteQuiz
 };

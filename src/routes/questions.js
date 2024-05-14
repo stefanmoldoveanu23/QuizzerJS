@@ -45,7 +45,7 @@ router
  *         description: Numeric ID of the question
  *         required: true
  *     responses:
- *       201:
+ *       200:
  *         description: Received the question
  *         content:
  *           application/json:
@@ -59,5 +59,30 @@ router
 router
     .route("/:id")
     .get(questionsController.getQuestion);
+
+/**
+ * @swagger
+ * /questions/{id}:
+ *   delete:
+ *     description: Delete a question
+ *     tags: [Question]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of the question
+ *         required: true
+ *     responses:
+ *       204:
+ *         description: Question deleted successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: General error
+ */
+router
+    .route("/:id")
+    .delete(questionsController.deleteQuestion);
 
 export default router;
