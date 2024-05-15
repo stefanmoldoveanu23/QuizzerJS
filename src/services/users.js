@@ -3,9 +3,7 @@ import httpError from "../utils/httpError.js";
 import bcrypt from "bcrypt";
 import mailer from "../utils/mailer.js";
 import { randomUUID } from "crypto";
-
 import jwt from "jsonwebtoken";
-const { sign } = jwt;
 
 const createUser = async (userInfo) => {
   const { email, password, ...user } = userInfo;
@@ -55,7 +53,7 @@ const createUser = async (userInfo) => {
       subject: "Email address verification",
       text: "Click the button to verify your email.",
       html: '\
-      <form action="localhost:3000/users/verify" method="POST">\
+      <form action="localhost:3000/users/verify" method="PATCH">\
         <div>\
           <label for="code">Press the button to confirm your email address</label>\
           <input type="hidden" name="code" id="code" value="' + code + '"/>\
@@ -83,14 +81,7 @@ const verifyEmail = async (verificationInfo) => {
     throw new httpError(400, "No user with code.");
   }
 
-  await prisma.user.update({
-    where: {
-      id: user.id
-    },
-    data: {
-      verified: true
-    }
-  });
+  await updateUser(user.id, { verified: true });
 
   return user;
 }
@@ -130,7 +121,7 @@ const loginUser = async (userInfo) => {
     throw new httpError(400, "Incorrect credentials.");
   }
 
-  return sign(
+  return jwt.sign(
     {
       user_id: result.id
     },
@@ -139,6 +130,19 @@ const loginUser = async (userInfo) => {
       expiresIn: "1h"
     }
   );
+}
+
+const updateUser = async (userId, userInfo) => {
+  const result = await prisma.user.update({
+    where: {
+      id: userId
+    },
+    data: userInfo
+  });
+
+  if (!result) {
+    throw new httpError(400, "No user with id " + userId + ".");
+  }
 }
 
 const deleteUser = async (userId) => {
@@ -158,5 +162,6 @@ export default {
   verifyEmail,
   getUser,
   loginUser,
+  updateUser,
   deleteUser
 };

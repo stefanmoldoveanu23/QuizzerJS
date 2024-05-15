@@ -25,10 +25,6 @@ const getUser = async (req, res, next) => {
   try {
     const result = await usersService.getUser(+req.params.id);
 
-    if (!result) {
-      return next(new httpError(400, "No user with id."));
-    }
-
     res.status(200).send(result);
   } catch (err) {
     next(err);
@@ -38,7 +34,18 @@ const getUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   try {
     const result = await usersService.loginUser(req.body);
+
     res.status(200).send(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
+const updateUser = async (req, res, next) => {
+  try {
+    await usersService.updateUser(req.user_id, req.body);
+
+    res.status(204).send();
   } catch (err) {
     next(err);
   }
@@ -46,7 +53,7 @@ const loginUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    await usersService.deleteUser(+req.params.id);
+    await usersService.deleteUser(req.user_id);
 
     res.status(204).send();
   } catch (err) {
@@ -59,5 +66,6 @@ export default {
   verifyEmail,
   getUser,
   loginUser,
+  updateUser,
   deleteUser
 };

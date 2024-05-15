@@ -29,6 +29,8 @@ const router = express.Router();
  *         description: Bad request
  *       401:
  *         description: Access denied
+ *       403:
+ *         description: No permission
  *       500:
  *         description: General error
  */
@@ -71,6 +73,8 @@ router
  *   delete:
  *     description: Delete a quiz
  *     tags: [Quiz]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -83,11 +87,15 @@ router
  *         description: Quiz deleted successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Access denied
+ *       403:
+ *         description: No permission
  *       500:
  *         description: General error
  */
 router
     .route("/:id")
-    .delete(quizzesController.deleteQuiz);
+    .delete(jwtDecoder, quizzesController.deleteQuiz);
 
 export default router;

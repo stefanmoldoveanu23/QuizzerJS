@@ -19,6 +19,14 @@ components:
           type: string
         password:
           type: string
+    updateUserDTO:
+      required: []
+      minProperties: 1
+      properties:
+        username:
+          type: string
+        password:
+          type: string
     user:
       properties:
         id:
@@ -34,6 +42,14 @@ components:
         code:
           type: string
     createQuizDTO:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    updateQuizDTO:
+      minProperties: 1
+      required: []
       properties:
         name:
           type: string
@@ -68,6 +84,27 @@ components:
           type: array
           items:
             type: integer
+    updateQuestionDTO:
+      minProperties: 1
+      required: []
+      properties:
+        type:
+          type: string
+          enum: [singleChoice, multipleChoice, association, itemSort]
+        position:
+          type: integer
+        statement:
+          type: string
+        choices:
+          type: array
+          items:
+            type: string
+        answer:
+          type: array
+          items:
+            type: integer
+        image:
+          type: boolean
     question:
       properties:
         id:

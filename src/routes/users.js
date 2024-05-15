@@ -2,6 +2,7 @@ import express from "express";
 import validate from "../middlewares/validate.js";
 import usersValidations from "../validations/users.js";
 import usersController from "../controllers/users.js";
+import jwtDecoder from "../middlewares/jwt-decoder.js";
 
 const router = express.Router();
 
@@ -119,27 +120,52 @@ router.route("/:id").get(usersController.getUser);
 
 /**
  * @swagger
- * /users/{id}:
+ * /users:
+ *   patch:
+ *     description: Update a users data
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/updateUserDTO'
+ *     responses:
+ *       204:
+ *         description: Updated user data successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Access denied
+ *       500:
+ *         description: General error
+ */
+router
+  .route("/")
+  .patch(jwtDecoder, validate(usersValidations.updateUsers), usersController.updateUser);
+
+/**
+ * @swagger
+ * /users:
  *   delete:
  *     description: Delete a user
  *     tags: [User]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: integer
- *         description: Numeric ID of user to be deleted
- *         requested: true
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       204:
  *         description: User deleted successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Access denied
  *       500:
  *         description: General error
  */
 router
-  .route("/:id")
-  .delete(usersController.deleteUser);
+  .route("/")
+  .delete(jwtDecoder, usersController.deleteUser);
 
 export default router;

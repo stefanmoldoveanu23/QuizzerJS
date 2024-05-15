@@ -4,12 +4,16 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import routes from "./src/routes/index.js";
 import errorHandler from "./src/middlewares/error-handler.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 var app = express();
 
 app.use(express.json());
+
+app.use('/static', express.static(path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')));
 
 const options = {
   definition: {
@@ -19,7 +23,7 @@ const options = {
       version: "1.0.0",
     },
   },
-  apis: ["./src/routes/**.js", "./swagger/schemas.yaml"], // files containing annotations as above
+  apis: ["./src/routes/**.js", "./swagger/schemas.yaml"], // files containing annotations as above,
 };
 
 const openapiSpecification = swaggerJsdoc(options);

@@ -11,9 +11,15 @@ const createUsers = Joi.object({
 const loginUsers = Joi.object({
   email: Joi.string().email().required(),
   password: JoiPassword.string().min(8).minOfSpecialCharacters(1).minOfNumeric(1).minOfUppercase(1).noWhiteSpaces().required()
-})
+});
+
+const updateUsers = Joi.object({
+  username: Joi.string().min(6),
+  password: JoiPassword.string().min(8).minOfSpecialCharacters(1).minOfNumeric(1).minOfUppercase(1).noWhiteSpaces(),
+});
 
 export default {
   createUsers,
-  loginUsers
+  loginUsers,
+  updateUsers
 };

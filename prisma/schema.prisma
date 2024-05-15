@@ -20,7 +20,6 @@ model User {
   password String
   verified Boolean
   code     String  @unique
-  image    Boolean @default(false)
   Quizzes  Quiz[]
 
   @@map("users")
@@ -32,7 +31,6 @@ model Quiz {
   User        User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   name        String
   description String
-  image       Boolean    @default(false)
   Questions   Question[]
 
   @@map("quizzes")

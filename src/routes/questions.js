@@ -1,5 +1,6 @@
 import express from 'express';
 import questionsController from '../controllers/questions.js';
+import jwtDecoder from '../middlewares/jwt-decoder.js';
 
 const router = express.Router();
 
@@ -9,6 +10,8 @@ const router = express.Router();
  *   post:
  *     description: Create a question
  *     tags: [Question]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -24,12 +27,14 @@ const router = express.Router();
  *               $ref: '#/components/schemas/question'
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Access denied
  *       500:
  *         description: General error
  */
 router
     .route("/")
-    .post(questionsController.createQuestion);
+    .post(jwtDecoder, questionsController.createQuestion);
 
 /**
  * @swagger
@@ -66,6 +71,8 @@ router
  *   delete:
  *     description: Delete a question
  *     tags: [Question]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -78,11 +85,13 @@ router
  *         description: Question deleted successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Access denied
  *       500:
  *         description: General error
  */
 router
     .route("/:id")
-    .delete(questionsController.deleteQuestion);
+    .delete(jwtDecoder, questionsController.deleteQuestion);
 
 export default router;
