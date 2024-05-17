@@ -153,11 +153,24 @@ const deleteUser = async (userId) => {
   }
 }
 
+const getQuizzes = async (userId) => {
+  await getUser(userId);
+
+  const result = await prisma.quiz.findMany({
+    where: {
+      userId: userId
+    }
+  });
+
+  return result;
+}
+
 export default {
   createUser,
   verifyEmail,
   getUser,
   loginUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getQuizzes
 };

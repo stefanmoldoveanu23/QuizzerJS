@@ -11,7 +11,7 @@ const deleteImages = async () => {
 
             const exist = (await prisma.question.findMany()).map(question => question.id);
 
-            ids.filter(id => exist.includes(id)).forEach(id => {
+            ids.filter(id => !exist.includes(id)).forEach(id => {
                 fs.rm(`./public/images/questions/${id}.webp`, (_err) => { });
             });
 

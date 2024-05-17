@@ -1,5 +1,4 @@
 import usersService from "../services/users.js";
-import httpError from "../utils/httpError.js";
 
 const createUser = async (req, res, next) => {
   try {
@@ -61,11 +60,22 @@ const deleteUser = async (req, res, next) => {
   }
 }
 
+const getQuizzes = async (req, res, next) => {
+  try {
+    const result = await usersService.getQuizzes(+req.params.id);
+
+    res.status(201).send(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export default {
   createUser,
   verifyEmail,
   getUser,
   loginUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getQuizzes
 };

@@ -69,6 +69,38 @@ router
 
 /**
  * @swagger
+ * /quizzes/{id}/questions:
+ *   get:
+ *     description: Get all questions for a quiz
+ *     tags: [Quiz]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of the quiz to be queried
+ *     responses:
+ *       201:
+ *         description: Successfully retrieved all questions for the quiz
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/question'
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: General error
+ */
+router
+    .route("/:id/questions")
+    .get(quizzesController.getQuestions);
+
+/**
+ * @swagger
  * /quizzes/{id}:
  *   patch:
  *     description: Update a quiz

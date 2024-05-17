@@ -106,7 +106,7 @@ router
  *         required: true
  *         description: Numeric ID of the user to get
  *     responses:
- *       200:
+ *       201:
  *         description: user
  *         content:
  *          application/json:
@@ -118,6 +118,38 @@ router
  *         description: General error
  */
 router.route("/:id").get(usersController.getUser);
+
+/**
+ * @swagger
+ * /users/{id}/quizzes:
+ *   get:
+ *     description: Get all quizzes that belong to a user
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of user to query
+ *     responses:
+ *       201:
+ *         description: Successfully retrieved all quizzes belonging to that user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 $ref: '#/components/schemas/quiz'
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: General error
+ */
+router
+  .route("/:id/quizzes")
+  .get(usersController.getQuizzes);
 
 /**
  * @swagger

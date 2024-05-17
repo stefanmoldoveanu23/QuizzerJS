@@ -73,9 +73,25 @@ const deleteQuiz = async (userId, quizId) => {
     }
 }
 
+const getQuestions = async (quizId) => {
+    await getQuiz(quizId);
+
+    const result = await prisma.question.findMany({
+        where: {
+            quizId: quizId
+        },
+        orderBy: {
+            position: 'asc'
+        }
+    });
+
+    return result;
+}
+
 export default {
     createQuiz,
     getQuiz,
     updateQuiz,
-    deleteQuiz
+    deleteQuiz,
+    getQuestions
 };

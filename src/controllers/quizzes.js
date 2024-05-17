@@ -14,7 +14,7 @@ const getQuiz = async (req, res, next) => {
     try {
         const result = await quizzesServices.getQuiz(+req.params.id);
 
-        res.status(200).send(result);
+        res.status(201).send(result);
     } catch (err) {
         next(err);
     }
@@ -40,9 +40,20 @@ const deleteQuiz = async (req, res, next) => {
     }
 }
 
+const getQuestions = async (req, res, next) => {
+    try {
+        const result = await quizzesServices.getQuestions(+req.params.id);
+
+        res.status(201).send(result);
+    } catch (err) {
+        next(err);
+    }
+}
+
 export default {
     createQuiz,
     getQuiz,
     updateQuiz,
-    deleteQuiz
+    deleteQuiz,
+    getQuestions
 };
