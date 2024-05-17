@@ -3,6 +3,7 @@ import httpError from "../utils/httpError.js";
 import fs from 'fs';
 import path from "path";
 import { fileURLToPath } from "url";
+import deleteImages from "../utils/imageDeleter.js";
 
 const createQuestion = async (userId, questionInfo) => {
     const { quizId, ...question } = questionInfo;
@@ -86,6 +87,42 @@ const updateQuestion = async (userId, questionId, questionInfo, image) => {
     }
 }
 
+const deleteImage = async (userId, questionId) => {
+    const result = await prisma.question.findUnique({
+        where: {
+            id: questionId
+        },
+        include: {
+            Quiz: true
+        }
+    });
+
+    if (!result) {
+        throw new httpError(400, `No question with id ${questionId}.`);
+    } else if (result.Quiz.userId !== userId) {
+        throw new httpError(403, `You are not authorized to delete question with id ${questionId}.`);
+    } else if (result.image === false) {
+        throw new httpError(400, `There is no image to delete for question with id ${questionId}.`);
+    } else {
+        prisma.$transaction(
+            async (prisma) => {
+                await prisma.question.update({
+                    where: {
+                        id: questionId
+                    },
+                    data: {
+                        image: false
+                    }
+                });
+
+                fs.rm(`../../public/images/questions/${questionId}.webp`, (err) => {
+                    throw new httpError(500, err.message);
+                });
+            }
+        );
+    }
+}
+
 const deleteQuestion = async (userId, questionId) => {
     const result = await prisma.question.findUnique({
         where: {
@@ -106,6 +143,8 @@ const deleteQuestion = async (userId, questionId) => {
                 id: questionId
             }
         });
+
+        fs.rm(`../../public/images/questions/${questionId}.webp`, (_err) => { });
     }
 }
 
@@ -113,5 +152,6 @@ export default {
     createQuestion,
     getQuestion,
     updateQuestion,
+    deleteImage,
     deleteQuestion
 }

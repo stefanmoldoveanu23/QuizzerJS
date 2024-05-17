@@ -2,7 +2,6 @@ import express from 'express';
 import questionsController from '../controllers/questions.js';
 import jwtDecoder from '../middlewares/jwt-decoder.js';
 import imageProcessor from '../middlewares/image-processor.js';
-import validator from '../middlewares/validate.js';
 
 const router = express.Router();
 
@@ -120,6 +119,7 @@ router
  *           type: integer
  *         description: Numeric ID of question to be updated
  *     requestBody:
+ *       required: true
  *       content:
  *         image/*:
  *           schema:
@@ -142,6 +142,37 @@ router
 router
     .route("/:id/image")
     .put(jwtDecoder, imageProcessor, questionsController.updateQuestion);
+
+/**
+ * @swagger
+ * /questions/{id}/image:
+ *   delete:
+ *     description: Delete a questions image
+ *     tags: [Question]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of question to be updated
+ *     responses:
+ *       204:
+ *         description: Successfully deleted the image for this question
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Access denied
+ *       403:
+ *         description: Forbidden
+ *       500:
+ *         description: General error
+ */
+router
+    .route("/:id/images")
+    .delete(jwtDecoder, questionsController.deleteImage);
 
 /**
  * @swagger

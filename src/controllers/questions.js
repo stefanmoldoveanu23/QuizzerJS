@@ -30,6 +30,16 @@ const updateQuestion = async (req, res, next) => {
     }
 }
 
+const deleteImage = async (req, res, next) => {
+    try {
+        await questionsService.deleteImage(req.user_id, +req.params.id);
+
+        res.status(204).send();
+    } catch (err) {
+        next(err);
+    }
+}
+
 const deleteQuestion = async (req, res, next) => {
     try {
         await questionsService.deleteQuestion(req.user_id, +req.params.id);
@@ -44,5 +54,6 @@ export default {
     createQuestion,
     getQuestion,
     updateQuestion,
+    deleteImage,
     deleteQuestion
 }

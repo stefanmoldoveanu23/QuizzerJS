@@ -4,9 +4,10 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import routes from "./src/routes/index.js";
 import errorHandler from "./src/middlewares/error-handler.js";
-import imageProcessor from "./src/middlewares/image-processor.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import { scheduleJob } from "node-schedule";
+import deleteImages from "./src/utils/imageDeleter.js";
 
 dotenv.config();
 
@@ -30,6 +31,8 @@ const openapiSpecification = swaggerJsdoc(options);
 if (process.env.NODE_ENV !== "production") {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 }
+
+scheduleJob("*/1 * * * *", deleteImages);
 
 app.use('/static', express.static(path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')));
 
