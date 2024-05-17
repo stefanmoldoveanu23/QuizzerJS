@@ -70,6 +70,43 @@ router
 /**
  * @swagger
  * /quizzes/{id}:
+ *   patch:
+ *     description: Update a quiz
+ *     tags: [Quiz]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Numeric ID of quiz to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/updateQuizDTO'
+ *     responses:
+ *       204:
+ *         description: Quiz updated successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Access denied
+ *       403:
+ *         description: No permission
+ *       500:
+ *         description: General error
+ */
+router
+    .route("/:id")
+    .patch(jwtDecoder, quizzesController.updateQuiz);
+
+/**
+ * @swagger
+ * /quizzes/{id}:
  *   delete:
  *     description: Delete a quiz
  *     tags: [Quiz]

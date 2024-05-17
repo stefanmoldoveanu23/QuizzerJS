@@ -1,20 +1,18 @@
 import prisma from "../../client.js";
 import httpError from "../utils/httpError.js";
-import bcrypt from "bcrypt";
 import mailer from "../utils/mailer.js";
 import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const createUser = async (userInfo) => {
-  const { email, password, ...user } = userInfo;
+  const { email, ...user } = userInfo;
 
   const exists = await prisma.user.findUnique({
     where: {
       email: email
     }
   });
-
-  const password_hashed = await bcrypt.hash(password, 10);
 
   if (exists) {
     if (exists.verified) {
@@ -26,7 +24,6 @@ const createUser = async (userInfo) => {
         },
         data: {
           email: email,
-          password: password_hashed,
           verified: false,
           ...user
         }
@@ -39,7 +36,6 @@ const createUser = async (userInfo) => {
   let result = await prisma.user.create({
     data: {
       email: email,
-      password: password_hashed,
       code: code,
       verified: false,
       ...user

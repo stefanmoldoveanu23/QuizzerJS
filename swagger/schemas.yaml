@@ -20,7 +20,6 @@ components:
         password:
           type: string
     updateUserDTO:
-      required: []
       minProperties: 1
       properties:
         username:
@@ -49,7 +48,6 @@ components:
           type: string
     updateQuizDTO:
       minProperties: 1
-      required: []
       properties:
         name:
           type: string
@@ -86,7 +84,6 @@ components:
             type: integer
     updateQuestionDTO:
       minProperties: 1
-      required: []
       properties:
         type:
           type: string
@@ -103,8 +100,6 @@ components:
           type: array
           items:
             type: integer
-        image:
-          type: boolean
     question:
       properties:
         id:

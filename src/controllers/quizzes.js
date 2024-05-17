@@ -22,7 +22,7 @@ const getQuiz = async (req, res, next) => {
 
 const updateQuiz = async (req, res, next) => {
     try {
-        await quizzesServices.updateQuiz(+req.params.id, req.body);
+        await quizzesServices.updateQuiz(req.user_id, +req.params.id, req.body);
 
         res.status(204).send();
     } catch (err) {

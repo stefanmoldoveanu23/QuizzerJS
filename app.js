@@ -4,6 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import routes from "./src/routes/index.js";
 import errorHandler from "./src/middlewares/error-handler.js";
+import imageProcessor from "./src/middlewares/image-processor.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -12,8 +13,6 @@ dotenv.config();
 var app = express();
 
 app.use(express.json());
-
-app.use('/static', express.static(path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')));
 
 const options = {
   definition: {
@@ -31,6 +30,8 @@ const openapiSpecification = swaggerJsdoc(options);
 if (process.env.NODE_ENV !== "production") {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 }
+
+app.use('/static', express.static(path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')));
 
 app.use(routes);
 

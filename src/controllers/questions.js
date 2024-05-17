@@ -22,7 +22,7 @@ const getQuestion = async (req, res, next) => {
 
 const updateQuestion = async (req, res, next) => {
     try {
-        await questionsService.updateQuestion(+req.params.id, req.body);
+        await questionsService.updateQuestion(req.user_id, +req.params.id, req.body, req.image);
 
         res.status(204).send();
     } catch (err) {

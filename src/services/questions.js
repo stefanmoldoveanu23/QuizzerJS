@@ -1,5 +1,8 @@
 import prisma from "../../client.js";
 import httpError from "../utils/httpError.js";
+import fs from 'fs';
+import path from "path";
+import { fileURLToPath } from "url";
 
 const createQuestion = async (userId, questionInfo) => {
     const { quizId, ...question } = questionInfo;
@@ -42,7 +45,7 @@ const getQuestion = async (questionId) => {
     }
 }
 
-const updateQuestion = async (userId, questionId, questionInfo) => {
+const updateQuestion = async (userId, questionId, questionInfo, image) => {
     const result = await prisma.question.findUnique({
         where: {
             id: questionId
@@ -57,11 +60,28 @@ const updateQuestion = async (userId, questionId, questionInfo) => {
     } else if (result.Quiz.userId !== userId) {
         throw new httpError(403, `You are not authorized to delete question with id ${questionId}.`);
     } else {
-        await prisma.question.update({
-            where: {
-                id: questionId
-            },
-            data: questionInfo
+        await prisma.$transaction(async (prisma) => {
+            await prisma.question.update({
+                where: {
+                    id: questionId
+                },
+                data: questionInfo
+            });
+
+            if (image !== undefined) {
+                fs.writeFile(
+                    path.join(path.dirname(fileURLToPath(import.meta.url)), '../../public/images/questions', `${questionId}.webp`),
+                    image,
+                    {
+                        flag: 'w'
+                    },
+                    (err) => {
+                        if (err) {
+                            throw new httpError(500, err.message);
+                        }
+                    }
+                );
+            }
         });
     }
 }

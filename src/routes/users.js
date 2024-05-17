@@ -3,6 +3,7 @@ import validate from "../middlewares/validate.js";
 import usersValidations from "../validations/users.js";
 import usersController from "../controllers/users.js";
 import jwtDecoder from "../middlewares/jwt-decoder.js";
+import encryptPassword from "../middlewares/encrypt-password.js";
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ const router = express.Router();
  */
 router
   .route("/")
-  .post(validate(usersValidations.createUsers), usersController.createUser);
+  .post(validate(usersValidations.createUsers), encryptPassword, usersController.createUser);
 
 /**
  * @swagger
@@ -144,7 +145,7 @@ router.route("/:id").get(usersController.getUser);
  */
 router
   .route("/")
-  .patch(jwtDecoder, validate(usersValidations.updateUsers), usersController.updateUser);
+  .patch(jwtDecoder, validate(usersValidations.updateUsers), encryptPassword, usersController.updateUser);
 
 /**
  * @swagger
