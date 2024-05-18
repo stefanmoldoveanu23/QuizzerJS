@@ -116,22 +116,26 @@ const deleteImage = async (userId, questionId) => {
     } else if (result.image === false) {
         throw new httpError(400, `There is no image to delete for question with id ${questionId}.`);
     } else {
-        await prisma.$transaction(
-            async (prisma) => {
-                await prisma.question.update({
-                    where: {
-                        id: questionId
-                    },
-                    data: {
-                        image: false
-                    }
-                });
+        try {
+            await prisma.$transaction(
+                async (prisma) => {
+                    await prisma.question.update({
+                        where: {
+                            id: questionId
+                        },
+                        data: {
+                            image: false
+                        }
+                    });
 
-                fs.rm(`../../public/images/questions/${questionId}.webp`, (err) => {
-                    throw new httpError(500, err.message);
-                });
-            }
-        );
+                    fs.rm(`../../public/images/questions/${questionId}.webp`, (err) => {
+                        throw new httpError(500, err.message);
+                    });
+                }
+            );
+        } catch (err) {
+            throw err;
+        }
     }
 }
 
