@@ -5,7 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "prisma generate && nodemon app.js",
+    "build": "npm install && prisma generate",
+    "start": "nodemon app.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "jest": {

@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const createUser = async (userInfo) => {
+const createUser = async (hostname, userInfo) => {
   const { email, ...user } = userInfo;
 
   const exists = await prisma.user.findUnique({
@@ -48,15 +48,15 @@ const createUser = async (userInfo) => {
       to: email,
       subject: "Email address verification",
       text: "Click the button to verify your email.",
-      html: '\
-      <form action="http://localhost:3000/users/verify" method="POST">\
+      html: `\
+      <form action="http://${hostname}:3000/users/verify" method="POST">\
         <div>\
           <label for="code">Press the button to confirm your email address</label>\
           <input type="hidden" name="code" id="code" value="' + code + '"/>\
         <div>\
         <button>Verify</button>\
       </form>\
-      '
+      `
     }
   );
 
