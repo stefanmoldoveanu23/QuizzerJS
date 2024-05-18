@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 const createQuestions = Joi.object({
+    quizId: Joi.number().integer().greater(-1),
     type: Joi.string().valid("singleChoice", "multipleChoice", "association", "itemSort").required(),
     position: Joi.number().integer().greater(-1).required(),
     statement: Joi.string().max(1000).required(),

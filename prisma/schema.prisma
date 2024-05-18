@@ -31,6 +31,7 @@ model Quiz {
   User        User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   name        String
   description String
+  length      Int        @default(0)
   Questions   Question[]
 
   @@map("quizzes")
