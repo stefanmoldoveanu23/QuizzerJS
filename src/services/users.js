@@ -49,7 +49,7 @@ const createUser = async (hostname, userInfo) => {
       subject: "Email address verification",
       text: "Click the button to verify your email.",
       html: `\
-      <form action="http://${hostname}:3000/users/verify" method="POST">\
+      <form action="http://${hostname}/users/verify" method="POST">\
         <div>\
           <label for="code">Press the button to confirm your email address</label>\
           <input type="hidden" name="code" id="code" value="' + code + '"/>\

@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm install && prisma generate",
+    "build": "npm install && prisma generate && mkdir ./public && mkdir ./public/images && mkdir ./public/images/questions",
     "start": "nodemon app.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },

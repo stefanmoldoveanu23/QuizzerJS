@@ -2,7 +2,7 @@ import usersService from "../services/users.js";
 
 const createUser = async (req, res, next) => {
   try {
-    const result = await usersService.createUser(req.hostname, req.body);
+    const result = await usersService.createUser(req.headers.host, req.body);
 
     res.status(201).send(result);
   } catch (err) {
