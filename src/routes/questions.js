@@ -173,7 +173,7 @@ router
  *         description: General error
  */
 router
-    .route("/:id/images")
+    .route("/:id/image")
     .delete(jwtDecoder, questionsController.deleteImage);
 
 /**
