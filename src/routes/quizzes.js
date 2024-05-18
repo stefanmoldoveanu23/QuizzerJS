@@ -1,6 +1,8 @@
 import express from 'express';
 import quizzesController from '../controllers/quizzes.js'
 import jwtDecoder from '../middlewares/jwt-decoder.js';
+import validate from '../middlewares/validate.js';
+import quizzesValidator from '../validations/quizzes.js';
 
 const router = express.Router();
 
@@ -36,7 +38,7 @@ const router = express.Router();
  */
 router
     .route("/")
-    .post(jwtDecoder, quizzesController.createQuiz);
+    .post(jwtDecoder, validate(quizzesValidator.createQuizzes), quizzesController.createQuiz);
 
 /**
  * @swagger
@@ -134,7 +136,7 @@ router
  */
 router
     .route("/:id")
-    .patch(jwtDecoder, quizzesController.updateQuiz);
+    .patch(jwtDecoder, validate(quizzesValidator.updateQuizzes), quizzesController.updateQuiz);
 
 /**
  * @swagger

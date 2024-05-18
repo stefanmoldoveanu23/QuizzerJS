@@ -2,6 +2,8 @@ import express from 'express';
 import questionsController from '../controllers/questions.js';
 import jwtDecoder from '../middlewares/jwt-decoder.js';
 import imageProcessor from '../middlewares/image-processor.js';
+import validate from '../middlewares/validate.js';
+import questionsValidator from '../validations/questions.js';
 
 const router = express.Router();
 
@@ -35,7 +37,7 @@ const router = express.Router();
  */
 router
     .route("/")
-    .post(jwtDecoder, questionsController.createQuestion);
+    .post(jwtDecoder, validate(questionsValidator.createQuestions), questionsController.createQuestion);
 
 /**
  * @swagger
@@ -101,7 +103,7 @@ router
  */
 router
     .route("/:id")
-    .patch(jwtDecoder, questionsController.updateQuestion);
+    .patch(jwtDecoder, validate(questionsValidator.updateQuestions), questionsController.updateQuestion);
 
 /**
  * @swagger
