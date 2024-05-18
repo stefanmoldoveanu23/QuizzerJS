@@ -3,7 +3,6 @@ import httpError from "../utils/httpError.js";
 import fs from 'fs';
 import path from "path";
 import { fileURLToPath } from "url";
-import deleteImages from "../utils/imageDeleter.js";
 
 const createQuestion = async (userId, questionInfo) => {
     const { quizId, ...question } = questionInfo;
@@ -104,7 +103,7 @@ const deleteImage = async (userId, questionId) => {
     } else if (result.image === false) {
         throw new httpError(400, `There is no image to delete for question with id ${questionId}.`);
     } else {
-        prisma.$transaction(
+        await prisma.$transaction(
             async (prisma) => {
                 await prisma.question.update({
                     where: {

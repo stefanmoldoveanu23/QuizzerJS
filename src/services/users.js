@@ -49,7 +49,7 @@ const createUser = async (userInfo) => {
       subject: "Email address verification",
       text: "Click the button to verify your email.",
       html: '\
-      <form action="localhost:3000/users/verify" method="PATCH">\
+      <form action="http://localhost:3000/users/verify" method="POST">\
         <div>\
           <label for="code">Press the button to confirm your email address</label>\
           <input type="hidden" name="code" id="code" value="' + code + '"/>\
@@ -66,7 +66,7 @@ const createUser = async (userInfo) => {
 const verifyEmail = async (verificationInfo) => {
   const { code } = verificationInfo;
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       code: code,
       verified: false
@@ -110,7 +110,7 @@ const loginUser = async (userInfo) => {
   }
 
   if (!result.verified) {
-    throw new httpError(400, "Your email address is not verified yet.");
+    throw new httpError(403, "Your email address is not verified yet.");
   }
 
   if (!await bcrypt.compare(password, result.password)) {

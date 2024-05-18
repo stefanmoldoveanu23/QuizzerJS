@@ -57,6 +57,8 @@ router
  *               example: cool_token
  *       400:
  *         description: Bad request
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: General error
  */
@@ -67,7 +69,7 @@ router
 /**
  * @swagger
  * /users/verify:
- *   patch:
+ *   post:
  *     description: Verify an email address
  *     tags: [User]
  *     requestBody:
@@ -90,7 +92,7 @@ router
  */
 router
   .route("/verify")
-  .patch(usersController.verifyEmail);
+  .post(usersController.verifyEmail);
 
 /**
  * @swagger
