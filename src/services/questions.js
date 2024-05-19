@@ -128,9 +128,13 @@ const deleteImage = async (userId, questionId) => {
                         }
                     });
 
-                    fs.rm(`../../public/images/questions/${questionId}.webp`, (err) => {
-                        throw new httpError(500, err.message);
-                    });
+                    fs.rm(
+                        path.join(path.dirname(fileURLToPath(import.meta.url)), '../../public/images/questions', `${questionId}.webp`),
+                        (err) => {
+                            if (err) {
+                                throw new httpError(500, err.message);
+                            }
+                        });
                 }
             );
         } catch (err) {
