@@ -14,7 +14,7 @@ const verifyEmail = async (req, res, next) => {
   try {
     const result = await usersService.verifyEmail(req.body);
 
-    res.status(200).send(result);
+    res.status(201).send(result);
   } catch (err) {
     next(err);
   }
@@ -34,7 +34,7 @@ const loginUser = async (req, res, next) => {
   try {
     const result = await usersService.loginUser(req.body);
 
-    res.status(200).send(result);
+    res.status(201).send(result);
   } catch (err) {
     next(err);
   }

@@ -32,6 +32,8 @@ const router = express.Router();
  *         description: Bad request
  *       401:
  *         description: Access denied
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: General error
  */
@@ -53,7 +55,7 @@ router
  *         description: Numeric ID of the question
  *         required: true
  *     responses:
- *       200:
+ *       201:
  *         description: Received the question
  *         content:
  *           application/json:
@@ -198,6 +200,8 @@ router
  *         description: Bad request
  *       401:
  *         description: Access denied
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: General error
  */

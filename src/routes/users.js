@@ -48,7 +48,7 @@ router
  *           schema:
  *             $ref: '#/components/schemas/loginUserDTO'
  *     responses:
- *       200:
+ *       201:
  *         description: Logged user in
  *         content:
  *           text/plain:
@@ -79,7 +79,7 @@ router
  *           schema:
  *             $ref: '#/components/schemas/email_verification'
  *     responses:
- *       200:
+ *       201:
  *         description: Successfully verified email address
  *         content:
  *           application/json:

@@ -32,7 +32,7 @@ const router = express.Router();
  *       401:
  *         description: Access denied
  *       403:
- *         description: No permission
+ *         description: Forbidden
  *       500:
  *         description: General error
  */
@@ -54,7 +54,7 @@ router
  *         required: true
  *         description: Numeric ID of the quiz to get
  *     responses:
- *       200:
+ *       201:
  *         description: quiz
  *         content:
  *           application/json:
@@ -130,7 +130,7 @@ router
  *       401:
  *         description: Access denied
  *       403:
- *         description: No permission
+ *         description: Forbidden
  *       500:
  *         description: General error
  */
@@ -161,7 +161,7 @@ router
  *       401:
  *         description: Access denied
  *       403:
- *         description: No permission
+ *         description: Forbidden
  *       500:
  *         description: General error
  */

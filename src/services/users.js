@@ -77,9 +77,7 @@ const verifyEmail = async (verificationInfo) => {
     throw new httpError(400, "No user with code.");
   }
 
-  await updateUser(user.id, { verified: true });
-
-  return user;
+  return await updateUser(user.id, { verified: true });
 }
 
 const getUser = async (userId) => {
